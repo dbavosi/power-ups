@@ -1,25 +1,35 @@
 var POWER_UP_NAME = 'custom fields lockdown';
 
+
 window.TrelloPowerUp.initialize({
-  'card-buttons': function(t, options) {
+  'board-buttons': function(t, options) {
     return [{
-      icon: 'https://trello.com/assets/f6693799e8236f50455b.svg', // Replace with your icon URL
-      text: 'Be Kind',
+      icon: 'https://example.com/icon.png', // Replace with your icon URL
+      text: 'Dark Mode',
       callback: function(t) {
-        t.alert({
-          message: 'Be Kind!',
-          display: 'info',
-          duration: 3
+        // Store the dark mode state in a shared context
+        t.set('board', 'shared', 'darkMode', true);
+
+        // Trigger a board refresh to apply changes immediately
+        t.board('id', 'name', 'url').then(function(board) {
+          window.location.href = board.url;
         });
       },
     }];
   },
-  'show-authorization': function(t, options) {
-    // Authorization logic if needed
-    return t.popup({
-      title: 'Authorize ' + POWER_UP_NAME,
-      url: './authorize.html',
-      height: 140,
-    });
-  }
+  'card-back-section': function(t, options) {
+    return {
+      title: 'Dark Mode',
+      icon: 'https://example.com/icon.png', // Replace with your icon URL
+      content: {
+        type: 'iframe',
+        url: t.signUrl('./dark-mode-settings.html'), // Create a separate HTML file for the settings
+        height: 150,
+      },
+    };
+  },
 });
+
+// In dark-mode-settings.html, you can have JavaScript to apply the dark mode styles
+// For example:
+// document.body.style.backgroundColor = 'black';
