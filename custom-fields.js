@@ -2,21 +2,14 @@ var POWER_UP_NAME = 'custom fields lockdown';
 
 window.TrelloPowerUp.initialize({
   'card-buttons': function(t, options) {
-    return t.get('card', 'shared', 'customFieldsDisabled').then(function(customFieldsDisabled) {
-      // Check if customFieldsDisabled is true, and exclude the Custom Fields button if disabled
-      if (customFieldsDisabled) {
-        return [];
-      }
-
-      return [{
-        icon: 'https://example.com/icon.png', // Replace with your icon URL
-        text: 'Custom Fields',
-        callback: function(t) {
-          // Your custom fields logic here
-          // This function is called when the Custom Fields button is clicked
-        },
-      }];
-    });
+    return [{
+      icon: 'https://trello.com/assets/f6693799e8236f50455b.svg', // Replace with your icon URL
+      text: 'Custom Fields',
+      condition: 'disable',  // Set a condition to disable the button
+      callback: function(t) {
+        // This function will not be called because the button is disabled
+      },
+    }];
   },
   'show-authorization': function(t, options) {
     // Authorization logic if needed
@@ -27,24 +20,3 @@ window.TrelloPowerUp.initialize({
     });
   }
 });
-
-// In your code, when you want to disable the Custom Fields button, set customFieldsDisabled to true
-// For example, you can have a button or trigger that sets this value
-function disableCustomFieldsButton() {
-  window.TrelloPowerUp.iframe({
-    target: 'card',
-    context: 'auto',
-  }).then(function(t) {
-    t.set('card', 'shared', 'customFieldsDisabled', true);
-  });
-}
-
-// To enable the Custom Fields button, set customFieldsDisabled to false
-function enableCustomFieldsButton() {
-  window.TrelloPowerUp.iframe({
-    target: 'card',
-    context: 'auto',
-  }).then(function(t) {
-    t.set('card', 'shared', 'customFieldsDisabled', false);
-  });
-}
