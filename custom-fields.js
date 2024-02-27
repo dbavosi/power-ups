@@ -2,14 +2,22 @@ var POWER_UP_NAME = 'custom fields lockdown';
 
 window.TrelloPowerUp.initialize({
   'card-buttons': function(t, options) {
-    return [{
-      icon: 'https://trello.com/assets/f6693799e8236f50455b.svg', // Replace with your icon URL
-      text: 'Custom Fields',
-      condition: 'disable',  // Set a condition to disable the button
-      callback: function(t) {
-        // This function will not be called because the button is disabled
-      },
-    }];
+    // Get all buttons on the card
+    var allButtons = options.entries;
+
+    // Filter out the button with data-test-id "custom-fields-button"
+    var filteredButtons = allButtons.filter(function(button) {
+      return button.data && button.data['test-id'] === 'custom-fields-button';
+    });
+
+    // If the filteredButtons array is not empty, it means there's a button with data-test-id "custom-fields-button"
+    // So, return an empty array to hide the button
+    if (filteredButtons.length > 0) {
+      return [];
+    }
+
+    // If there is no button with data-test-id "custom-fields-button", return all buttons as usual
+    return allButtons;
   },
   'show-authorization': function(t, options) {
     // Authorization logic if needed
