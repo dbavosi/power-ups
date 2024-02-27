@@ -1,14 +1,25 @@
-// you can also use the t you get in a capability function
-var t = window.TrelloPowerUp.iframe();
+var POWER_UP_NAME = 'custom fields lockdown';
 
-// simplest alert requires just a message
-// displays for 5 seconds using the 'info' display
-t.alert({
-  message: 'Powering-Up, give us a second...'
-});
-
-// more complex alert
-t.alert({
-  message: 'Powered-Up Successfully 🎉',
-  duration: 6,
+window.TrelloPowerUp.initialize({
+  'card-buttons': function(t, options) {
+    return [{
+      icon: 'https://trello.com/assets/f6693799e8236f50455b.svg', // Replace with your icon URL
+      text: 'Be Kind',
+      callback: function(t) {
+        t.alert({
+          message: 'Be Kind!',
+          display: 'info',
+          duration: 3
+        });
+      },
+    }];
+  },
+  'show-authorization': function(t, options) {
+    // Authorization logic if needed
+    return t.popup({
+      title: 'Authorize ' + POWER_UP_NAME,
+      url: './authorize.html',
+      height: 140,
+    });
+  }
 });
