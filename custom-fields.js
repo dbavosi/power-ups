@@ -1,30 +1,22 @@
-// Your Power-Up Name
 var POWER_UP_NAME = 'custom fields lockdown';
 
-// Trello Power-Up initialization
 window.TrelloPowerUp.initialize({
-  'card-badges': function(t, options) {
-    return [];
-  },
   'card-buttons': function(t, options) {
-    return [{
-      icon: 'https://example.com/icon.png', // Replace with your icon URL
-      text: 'Hello',
-      callback: function(t) {
-        // Display a hello message
-        t.alert({
-          message: 'Hello! This is your custom Power-Up speaking.',
-          display: 'info',
-          duration: 3
-        });
+    return t.get('card', 'shared', 'customFieldsDisabled').then(function(customFieldsDisabled) {
+      // Check if customFieldsDisabled is true, and exclude the Custom Fields button if disabled
+      if (customFieldsDisabled) {
+        return [];
       }
-    }];
-  },
-  'card-detail-badges': function(t, options) {
-    return [];
-  },
-  'card-detail-buttons': function(t, options) {
-    return [];
+
+      return [{
+        icon: 'https://example.com/icon.png', // Replace with your icon URL
+        text: 'Custom Fields',
+        callback: function(t) {
+          // Your custom fields logic here
+          // This function is called when the Custom Fields button is clicked
+        },
+      }];
+    });
   },
   'show-authorization': function(t, options) {
     // Authorization logic if needed
@@ -35,3 +27,24 @@ window.TrelloPowerUp.initialize({
     });
   }
 });
+
+// In your code, when you want to disable the Custom Fields button, set customFieldsDisabled to true
+// For example, you can have a button or trigger that sets this value
+function disableCustomFieldsButton() {
+  window.TrelloPowerUp.iframe({
+    target: 'card',
+    context: 'auto',
+  }).then(function(t) {
+    t.set('card', 'shared', 'customFieldsDisabled', true);
+  });
+}
+
+// To enable the Custom Fields button, set customFieldsDisabled to false
+function enableCustomFieldsButton() {
+  window.TrelloPowerUp.iframe({
+    target: 'card',
+    context: 'auto',
+  }).then(function(t) {
+    t.set('card', 'shared', 'customFieldsDisabled', false);
+  });
+}
