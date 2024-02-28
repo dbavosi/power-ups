@@ -4,25 +4,25 @@
 <head>
   <meta charset="utf-8">
   
-  <style>
-.js-custom-fields {
-	display: none !important;
-	visibility: hidden !important;
-}
-</style>
+  <script>
+    // Wait for the DOM to be fully loaded before manipulating elements
+    document.addEventListener('DOMContentLoaded', function() {
+      // Access the parent window using window.parent
+      var parentWindow = window.parent;
 
+      // Hide the div with class .js-custom-fields in the parent page
+      var customFieldsDiv = parentWindow.document.querySelector('.js-custom-fields');
+      if (customFieldsDiv) {
+        customFieldsDiv.style.display = 'none';
+      }
+    });
+  </script>
 
 </head>
 
 <body>
 
-<script type="text/javascript" src="jquery-1.10.1.min.js"></script>
 
-<script type="text/javascript">
-$(document).load(function(){
-    $('#js-custom-fields', window.parent.document).hide();
-});
-</script>
 
 
   <script src="https://p.trellocdn.com/power-up.min.js"></script>
@@ -33,9 +33,9 @@ $(document).load(function(){
         return [
           {
             icon: "https://i.ibb.co/6sbknH0/logo-stroke-32pt-style-2-no-stroke.png",
-            text: 'Hello My World!',
+            text: 'Hello Big World!',
             callback: function (t) {
-              return t.card().then((card) => alert("hello world! you're awesome!"))
+              return t.card().then((card) => alert("hello world! you're  totally awesome!"))
             }
           }
         ];
