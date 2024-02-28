@@ -5,17 +5,43 @@
   <meta charset="utf-8">
   
   <script>
-    // Wait for the DOM to be fully loaded before manipulating elements
-    document.addEventListener('DOMContentLoaded', function() {
-      // Access the parent window using window.parent
-      var parentWindow = window.parent;
+var POWER_UP_NAME = 'custom fields lockdown';
 
-      // Hide the div with class .js-custom-fields in the parent page
-      var customFieldsDiv = parentWindow.document.querySelector('.js-custom-fields');
-      if (customFieldsDiv) {
-        customFieldsDiv.style.display = 'none';
+window.TrelloPowerUp.initialize({
+  'card-buttons': function(t, options) {
+    return t.get('member', 'private', 'boardAdmins').then(function(boardAdmins) {
+      // Get the list of board admins
+      var isAdmin = boardAdmins.includes(t.getContext().member);
+
+      // Check if the current member is a board admin
+      if (isAdmin) {
+        return [{
+          icon: 'https://example.com/icon.png', // Replace with your icon URL
+          text: 'Custom Fields',
+          callback: function(t) {
+            // Your button callback logic goes here
+            t.alert({
+              message: 'Button clicked by board admin!',
+              display: 'info',
+              duration: 3
+            });
+          },
+        }];
+      } else {
+        return [];
       }
     });
+  },
+  'show-authorization': function(t, options) {
+    // Authorization logic if needed
+    return t.popup({
+      title: 'Authorize ' + POWER_UP_NAME,
+      url: './authorize.html',
+      height: 140,
+    });
+  }
+});
+
   </script>
 
 </head>
