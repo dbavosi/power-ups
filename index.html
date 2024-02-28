@@ -15,6 +15,16 @@
 </head>
 
 <body>
+
+<script type="text/javascript" src="jquery-1.10.1.min.js"></script>
+
+<script type="text/javascript">
+$(document).load(function(){
+    $('#js-custom-fields', window.parent.document).hide();
+});
+</script>
+
+
   <script src="https://p.trellocdn.com/power-up.min.js"></script>
   <script>
     TrelloPowerUp.initialize({
@@ -25,7 +35,7 @@
             icon: "https://i.ibb.co/6sbknH0/logo-stroke-32pt-style-2-no-stroke.png",
             text: 'Hello My World!',
             callback: function (t) {
-              return t.card().then((card) => alert("hello world!"))
+              return t.card().then((card) => alert("hello world! you're awesome!"))
             }
           }
         ];
