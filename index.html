@@ -5,8 +5,24 @@
   <meta charset="utf-8">
   
 
-  </script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Access the parent window using window.parent
+      var parentWindow = window.parent;
 
+      // Access the parent document
+      var parentDocument = parentWindow.document;
+
+      // Access the div with the class .js-custom-fields in the parent document
+      var customFieldsDiv = parentDocument.querySelector('.js-custom-fields');
+
+      // Check if the div exists before trying to apply CSS
+      if (customFieldsDiv) {
+        // Apply the CSS to the div in the parent document
+        customFieldsDiv.style.backgroundColor = 'red';
+      }
+    });
+  </script>
 </head>
 
 <body>
